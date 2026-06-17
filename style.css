@@ -382,6 +382,17 @@ html, body {
 .tooltip-body  { font-size: .8125rem; color: rgba(255,255,255,.75); line-height: 1.5; margin-bottom: 6px; }
 .tooltip-time  { font-size: .75rem; color: rgba(255,255,255,.5); font-weight: 600; letter-spacing: .03em; }
 
+/* ── Version tag ──────────────────────────────────────────────── */
+.version-tag {
+  position: fixed;
+  bottom: 8px; right: 10px;
+  font-size: .65rem;
+  color: var(--text-muted);
+  opacity: .5;
+  pointer-events: none;
+  z-index: 2;
+}
+
 /* ── Responsive ───────────────────────────────────────────────── */
 @media (max-width: 640px) {
   .calendar-title { margin-bottom: 14px; }
