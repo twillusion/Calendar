@@ -341,11 +341,12 @@ html, body {
   font-size: .74rem;
 }
 
-/* Start piece: rounded left, overlaps the cell's right border */
+/* Start piece: rounded left, text overflows into adjacent colored cells */
 .event-pill.span-start {
   border-radius: 5px 0 0 5px;
   margin-right: -1px;
-  position: relative; z-index: 1;
+  position: relative; z-index: 2; /* above middle/end so text shows */
+  overflow: visible;              /* let text flow over adjacent cells */
 }
 /* Middle piece: overlaps both adjacent borders */
 .event-pill.span-middle {
