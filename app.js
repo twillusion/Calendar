@@ -33,45 +33,13 @@
 })();
 
 /* ── Calendar data (XOR-encrypted, base64-encoded) ──────────────
-   Key: the correct password.
-   To re-generate, run encryptData(JSON.stringify(EVENTS), password)
-   in the browser console with the real data, then paste the output
-   as ENCRYPTED_BLOB below.
+   To update: node -e "
+     function xorCipher(s,k){let o='';for(let i=0;i<s.length;i++)o+=String.fromCharCode(s.charCodeAt(i)^k.charCodeAt(i%k.length));return o;}
+     console.log(Buffer.from(xorCipher(JSON.stringify(EVENTS),'YOUR_PASSWORD')).toString('base64'));
+   "
+   Paste the output as ENCRYPTED_BLOB below.
    ──────────────────────────────────────────────────────────────── */
-
-// Placeholder: encrypted with password "agilent" — replace with your real data + password
-const ENCRYPTED_BLOB = (() => {
-  const sample = {
-    "2026-06-01": [
-      { title: "All-Hands Sync",   time: "9:00 AM",  color: "blue",  detail: "Q2 kickoff. Slides due EOD prior." },
-      { title: "Lunch w/ Jerry",   time: "12:30 PM", color: "teal",  detail: "He still owes me from last quarter." }
-    ],
-    "2026-06-03": [
-      { title: "Lab Review",       time: "10:00 AM", color: "navy",  detail: "Mass spec calibration results. Bring coffee." }
-    ],
-    "2026-06-09": [
-      { title: "Training",         time: "2:00 PM",  color: "slate", detail: "Mandatory safety training. Fourth time this year." },
-      { title: "1:1 with Manager", time: "4:00 PM",  color: "blue",  detail: "Definitely going to ask about the budget again." }
-    ],
-    "2026-06-15": [
-      { title: "Board Presentation",time:"8:30 AM",  color: "navy",  detail: "Quarterly metrics. Praying the demo works." }
-    ],
-    "2026-06-17": [
-      { title: "\"Offsite\"",       time: "All day",  color: "teal",  detail: "Golf. Technically a team-building exercise." }
-    ],
-    "2026-06-22": [
-      { title: "Product Launch",   time: "11:00 AM", color: "blue",  detail: "They moved this up. Again." },
-      { title: "PR Interview",     time: "3:00 PM",  color: "slate", detail: "Just smile and say 'industry-leading'." }
-    ],
-    "2026-06-25": [
-      { title: "Compliance Audit", time: "9:00 AM",  color: "navy",  detail: "Everything is fine. Everything is fine." }
-    ],
-    "2026-06-30": [
-      { title: "EOQ Close",        time: "All day",  color: "slate", detail: "Send help." }
-    ]
-  };
-  return encryptData(JSON.stringify(sample), "agilent");
-})();
+const ENCRYPTED_BLOB = "PE1TXHIET1laQVhaTH00Gk40WxYFCU5TTS8rDA4NOBBOSxgFBApMfU0gACwSBggVTkVNDSgDDh5iCEALABkMTUJlCwQYIVsOS1ZOKhodMwAMTAFeAQYNFEkbCyofDQ00V0IPAx5JJyxlEjxAYgBSW1pBWVlDdllDVhtJQB0FGAUKTH1NIAAjXQMRTkBLGwcqCkNWYnMOBUwICBZMa00CAyxdEEtWTgsDGyJNTU4kVxYIBQBLVUwEGhIYL19CKAAPBg4WZxsEATBeAx0JTA8AHGcnI049b05LXlxbWUN3WUxddxBYMhdOHQYaKwpDVmJzDgoDDRFNQmUbCAElEFhLLQAFTwomFkNAYlENBQMeS1VMJQMUCWIeQA0JGAgGAmVVQy81QRYGAUwoAw0oDhlMNFcPGQANHQpOIQATTAhwQBQxQEtdXnVZTFx2H1NRTlYyFEwzBhUAJRBYSy0ACgAPP01NTjRbDwxOVksuAitPBQ05EE5LDwMFABxlVUMOLEcHS0BODQoaJgYNTnoQIRwfGAYCTgYDAgMhSkIdCQEZAw8zCkEKL0BCIS5OFDJCZV1RXnYfUl9BXVBNVBwUQxgpRg4MTlZLLgIkAAAUYh5AHQUBDE1UZS4NAGBWAxBOQEsMASsAE156EAAFGQlLQ0wjChUNKV5AU04vHBwaKAJBLSxRDQgUTB0KAzcDABglEgQGHkwhLUw6Mhw=";
 
 /* ── Crypto helpers (XOR cipher + base64) ────────────────────── */
 function xorCipher(str, key) {
