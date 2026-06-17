@@ -8,66 +8,74 @@
 </head>
 <body>
 
-  <!-- Calendar App (always visible, empty until unlocked) -->
-  <div id="app" class="app">
-    <header class="app-header">
-      <div class="header-inner">
-        <div class="header-brand">
-          <div class="logo-mark small"></div>
-          <span class="logo-text">My Schedule</span>
-        </div>
-        <div class="header-nav">
-          <button class="nav-btn" onclick="changeMonth(-1)">&#8249;</button>
-          <h1 id="month-label" class="month-label">June 2026</h1>
-          <button class="nav-btn" onclick="changeMonth(1)">&#8250;</button>
-        </div>
-        <div class="header-actions">
-          <button class="lock-btn" onclick="lockCalendar()" title="Lock">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            Lock
-          </button>
-        </div>
-      </div>
-    </header>
-
-    <main class="calendar-container">
-      <!-- Fully rendered by JS: cal-header row + week-rows + week-spans -->
-      <div class="calendar-grid" id="calendar-grid"></div>
-    </main>
-
-    <!-- Tooltip -->
-    <div id="tooltip" class="tooltip" role="tooltip" aria-hidden="true">
-      <div class="tooltip-title" id="tooltip-title"></div>
-      <div class="tooltip-body"  id="tooltip-body"></div>
-      <div class="tooltip-time"  id="tooltip-time"></div>
-    </div>
-  </div>
-
-  <!-- Password Gate (floats over the calendar) -->
-  <div id="gate" class="gate-overlay">
-    <div class="gate-card">
-      <div class="gate-logo">
+  <!-- Gate: sits in normal page flow, above the calendar -->
+  <div id="gate" class="gate-section">
+    <div class="gate-inner">
+      <div class="gate-brand">
         <div class="logo-mark"></div>
-        <span class="logo-text">Calendar</span>
+        <span class="gate-brand-name">My Schedule</span>
+        <span class="gate-badge">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Restricted
+        </span>
       </div>
-      <h2 class="gate-title">Access Required</h2>
-      <p class="gate-subtitle">This schedule is restricted. Enter the access code to continue.</p>
+      <p class="gate-subtitle">Enter the access code to view events.</p>
       <div class="input-group">
         <input
           type="password"
           id="password-input"
           class="password-input"
-          placeholder="Enter access code"
+          placeholder="Access code"
           autocomplete="off"
           spellcheck="false"
         />
         <button class="unlock-btn" onclick="attemptUnlock()">
-          <span>Unlock</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          Unlock
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </button>
       </div>
       <p id="error-msg" class="error-msg" aria-live="polite"></p>
     </div>
+  </div>
+
+  <!-- App header: hidden while locked, visible after unlock -->
+  <header id="app-header" class="app-header" style="display:none">
+    <div class="header-inner">
+      <div class="header-brand">
+        <div class="logo-mark small"></div>
+        <span class="logo-text">My Schedule</span>
+      </div>
+      <div class="header-nav">
+        <button class="nav-btn" onclick="changeMonth(-1)">&#8249;</button>
+        <h1 id="month-label" class="month-label"></h1>
+        <button class="nav-btn" onclick="changeMonth(1)">&#8250;</button>
+      </div>
+      <div class="header-actions">
+        <button class="lock-btn" onclick="lockCalendar()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Lock
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Month label shown while locked (below gate, above calendar) -->
+  <div id="locked-month-bar" class="locked-month-bar">
+    <button class="nav-btn" onclick="changeMonth(-1)">&#8249;</button>
+    <span id="locked-month-label" class="month-label"></span>
+    <button class="nav-btn" onclick="changeMonth(1)">&#8250;</button>
+  </div>
+
+  <!-- Calendar (always rendered; empty while locked) -->
+  <main class="calendar-container">
+    <div class="calendar-grid" id="calendar-grid"></div>
+  </main>
+
+  <!-- Tooltip -->
+  <div id="tooltip" class="tooltip" role="tooltip" aria-hidden="true">
+    <div class="tooltip-title" id="tooltip-title"></div>
+    <div class="tooltip-body"  id="tooltip-body"></div>
+    <div class="tooltip-time"  id="tooltip-time"></div>
   </div>
 
   <script src="app.js"></script>

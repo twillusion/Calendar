@@ -9,8 +9,6 @@
   --gray-100:      #EEF2F7;
   --gray-200:      #D8E4F0;
   --gray-400:      #8FA8C4;
-  --gray-600:      #4A6A8A;
-  --gray-800:      #1C3550;
   --text-primary:  #1C3550;
   --text-secondary:#4A6A8A;
   --text-muted:    #8FA8C4;
@@ -25,65 +23,131 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body {
-  height: 100%;
   font-family: var(--font);
   background: var(--gray-50);
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
 }
 
-/* ── App Shell ────────────────────────────────────────────────── */
-.app {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+/* ── Logo mark ────────────────────────────────────────────────── */
+.logo-mark {
+  width: 32px; height: 32px;
+  background: var(--blue-primary);
+  border-radius: 8px;
+  position: relative; flex-shrink: 0;
+}
+.logo-mark::after {
+  content: ''; position: absolute; inset: 6px;
+  background: var(--white); border-radius: 3px; opacity: .25;
+}
+.logo-mark.small { width: 22px; height: 22px; border-radius: 5px; }
+.logo-mark.small::after { inset: 4px; }
+
+/* ── Gate section (in page flow, above calendar) ──────────────── */
+.gate-section {
+  background: linear-gradient(160deg, var(--blue-darker) 0%, var(--blue-dark) 60%, var(--blue-primary) 100%);
+  padding: 36px 24px 32px;
 }
 
+.gate-inner {
+  max-width: 560px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.gate-brand {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 4px;
+}
+.gate-brand .logo-mark { width: 28px; height: 28px; border-radius: 6px; }
+.gate-brand .logo-mark::after { inset: 5px; }
+.gate-brand-name {
+  font-size: 1.1rem; font-weight: 700;
+  color: var(--white); letter-spacing: -.01em;
+}
+.gate-badge {
+  display: flex; align-items: center; gap: 5px;
+  background: rgba(255,255,255,.15);
+  color: rgba(255,255,255,.85);
+  border-radius: 20px;
+  padding: 3px 10px 3px 8px;
+  font-size: .75rem; font-weight: 600;
+  letter-spacing: .02em;
+}
+
+.gate-subtitle {
+  font-size: .9rem;
+  color: rgba(255,255,255,.70);
+}
+
+.input-group {
+  display: flex; gap: 8px;
+  width: 100%; max-width: 380px;
+}
+
+.password-input {
+  flex: 1; height: 42px;
+  padding: 0 14px;
+  border: 1.5px solid rgba(255,255,255,.25);
+  border-radius: var(--radius-sm);
+  font-size: .9375rem;
+  color: var(--white);
+  background: rgba(255,255,255,.12);
+  outline: none;
+  transition: border-color .15s, background .15s;
+}
+.password-input:focus {
+  border-color: rgba(255,255,255,.6);
+  background: rgba(255,255,255,.18);
+}
+.password-input::placeholder { color: rgba(255,255,255,.45); }
+
+.unlock-btn {
+  height: 42px; padding: 0 18px;
+  background: var(--white);
+  color: var(--blue-dark);
+  border: none; border-radius: var(--radius-sm);
+  font-size: .875rem; font-weight: 700;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 6px;
+  transition: background .15s, transform .1s;
+  white-space: nowrap;
+}
+.unlock-btn:hover  { background: var(--blue-light); }
+.unlock-btn:active { transform: scale(.97); }
+
+.error-msg {
+  font-size: .8125rem;
+  color: #FFB3B3;
+  min-height: 16px;
+}
+.error-msg:empty { opacity: 0; }
+
+/* ── App header (visible only when unlocked) ──────────────────── */
 .app-header {
   background: var(--white);
   border-bottom: 1px solid var(--gray-200);
   box-shadow: var(--shadow-sm);
-  position: sticky; top: 0;
-  z-index: 10;
+  position: sticky; top: 0; z-index: 100;
 }
 
 .header-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 24px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  gap: 24px;
+  max-width: 1100px; margin: 0 auto;
+  padding: 0 24px; height: 58px;
+  display: flex; align-items: center; gap: 24px;
 }
 
 .header-brand {
   display: flex; align-items: center; gap: 9px;
   min-width: 140px;
 }
-.logo-mark {
-  width: 32px; height: 32px;
-  background: var(--blue-primary);
-  border-radius: 8px;
-  position: relative;
-  flex-shrink: 0;
-}
-.logo-mark::after {
-  content: '';
-  position: absolute;
-  inset: 6px;
-  background: var(--white);
-  border-radius: 3px;
-  opacity: .25;
-}
-.logo-mark.small { width: 22px; height: 22px; border-radius: 5px; }
-.logo-mark.small::after { inset: 4px; }
-
 .logo-text {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--blue-dark);
-  letter-spacing: -.01em;
+  font-size: 1rem; font-weight: 700;
+  color: var(--blue-dark); letter-spacing: -.01em;
 }
 
 .header-nav {
@@ -92,23 +156,19 @@ html, body {
 }
 
 .month-label {
-  font-size: 1.125rem;
-  font-weight: 700;
+  font-size: 1.125rem; font-weight: 700;
   color: var(--text-primary);
-  min-width: 160px;
-  text-align: center;
+  min-width: 160px; text-align: center;
   letter-spacing: -.02em;
 }
 
 .nav-btn {
-  width: 32px; height: 32px;
+  width: 30px; height: 30px;
   border: 1.5px solid var(--gray-200);
   border-radius: var(--radius-sm);
   background: var(--white);
   color: var(--text-secondary);
-  font-size: 1.25rem;
-  line-height: 1;
-  cursor: pointer;
+  font-size: 1.2rem; cursor: pointer;
   display: grid; place-items: center;
   transition: border-color .15s, background .15s;
 }
@@ -122,43 +182,45 @@ html, body {
 
 .lock-btn {
   display: flex; align-items: center; gap: 6px;
-  padding: 6px 14px;
+  padding: 6px 13px;
   border: 1.5px solid var(--gray-200);
   border-radius: var(--radius-sm);
-  background: var(--white);
-  color: var(--text-secondary);
-  font-size: .8125rem;
-  font-weight: 600;
-  cursor: pointer;
+  background: var(--white); color: var(--text-secondary);
+  font-size: .8rem; font-weight: 600; cursor: pointer;
   transition: all .15s;
 }
 .lock-btn:hover {
   border-color: var(--blue-primary);
-  color: var(--blue-primary);
-  background: var(--blue-light);
+  color: var(--blue-primary); background: var(--blue-light);
 }
 
-/* ── Calendar Container ───────────────────────────────────────── */
+/* ── Month bar shown while locked ─────────────────────────────── */
+.locked-month-bar {
+  display: flex; align-items: center; justify-content: center; gap: 16px;
+  padding: 14px 24px;
+  background: var(--white);
+  border-bottom: 1px solid var(--gray-200);
+}
+.locked-month-bar .month-label { color: var(--text-secondary); }
+.locked-month-bar .nav-btn { background: var(--gray-50); }
+
+/* ── Calendar container ───────────────────────────────────────── */
 .calendar-container {
-  flex: 1;
   max-width: 1100px;
-  margin: 32px auto;
-  padding: 0 24px 48px;
-  width: 100%;
+  margin: 28px auto 48px;
+  padding: 0 24px;
 }
 
-/* ── Calendar Grid (flex-col wrapper) ────────────────────────── */
+/* ── Calendar grid (flex-col) ─────────────────────────────────── */
 .calendar-grid {
-  display: flex;
-  flex-direction: column;
+  display: flex; flex-direction: column;
   border: 1px solid var(--gray-200);
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow-md);
-  background: var(--gray-200); /* shows as separator lines */
+  background: var(--gray-200); /* cell separators */
 }
 
-/* ── Weekday header row ───────────────────────────────────────── */
 .cal-header {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -170,11 +232,9 @@ html, body {
   background: var(--blue-dark);
   color: rgba(255,255,255,.85);
   text-align: center;
-  padding: 12px 0;
-  font-size: .75rem;
-  font-weight: 700;
-  letter-spacing: .08em;
-  text-transform: uppercase;
+  padding: 11px 0;
+  font-size: .72rem; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
 }
 
 /* ── Week rows ────────────────────────────────────────────────── */
@@ -183,97 +243,106 @@ html, body {
   grid-template-columns: repeat(7, 1fr);
   gap: 0 1px;
   background: var(--gray-200);
+  border-bottom: 1px solid var(--gray-200);
 }
+.week-row:last-child { border-bottom: none; }
 
 .day-cell {
   background: var(--white);
-  min-height: 90px;
-  padding: 8px 8px 6px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  transition: background .1s;
+  min-height: 100px;
+  padding: 8px 0 6px; /* no horizontal padding — let events go edge-to-edge */
+  display: flex; flex-direction: column; gap: 3px;
+  overflow: visible;
 }
 .day-cell:hover { background: var(--gray-50); }
 .day-cell.other-month { background: var(--gray-50); }
 .day-cell.other-month .day-number { color: var(--text-muted); }
 
 .day-number {
-  font-size: .8125rem;
-  font-weight: 700;
+  font-size: .8rem; font-weight: 700;
   color: var(--text-secondary);
   width: 26px; height: 26px;
   display: grid; place-items: center;
-  border-radius: 50%;
-  flex-shrink: 0;
+  border-radius: 50%; flex-shrink: 0;
+  margin-left: 8px; /* indent only the number */
 }
 .day-cell.today .day-number {
-  background: var(--blue-primary);
-  color: var(--white);
+  background: var(--blue-primary); color: var(--white);
 }
 
 .events-list {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-/* ── Spanning events row ──────────────────────────────────────── */
-.week-spans {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  padding: 3px 6px 7px;
-  background: var(--white);
-  border-top: 1px solid var(--gray-100);
-  gap: 3px 4px;
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 0 6px; /* padding for single-day events */
 }
 
 /* ── Event pills ──────────────────────────────────────────────── */
 .event-pill {
-  font-size: .72rem;
-  font-weight: 600;
-  padding: 3px 8px;
+  font-size: .72rem; font-weight: 600;
+  padding: 3px 7px;
   border-radius: 4px;
   cursor: default;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   transition: filter .15s, transform .1s;
   user-select: none;
 }
-.event-pill:hover { filter: brightness(.92); transform: translateY(-1px); }
+.event-pill:hover { filter: brightness(.9); transform: translateY(-1px); }
 
-/* Spanning pill overrides */
-.event-pill.spanning {
-  display: block;
-  padding: 4px 10px;
-  font-size: .76rem;
-  border-radius: 5px;
+/* Color variants — left accent border for normal & span-start/-only */
+.event-pill.blue  { background: var(--blue-light); color: var(--blue-dark); }
+.event-pill.teal  { background: #E0F4F4; color: #1A6B6B; }
+.event-pill.navy  { background: #E0E8F4; color: #1A2E5A; }
+.event-pill.slate { background: #EEF1F7; color: #3A4A6A; }
+
+/* Left accent border: only on leading edge */
+.event-pill.blue:not(.span-middle):not(.span-end)   { border-left: 3px solid var(--blue-primary); }
+.event-pill.teal:not(.span-middle):not(.span-end)   { border-left: 3px solid #2AA8A8; }
+.event-pill.navy:not(.span-middle):not(.span-end)   { border-left: 3px solid #2C4B9A; }
+.event-pill.slate:not(.span-middle):not(.span-end)  { border-left: 3px solid #5A7098; }
+
+/* ── Spanning pill pieces (edge-to-edge within cell) ─────────── */
+.event-pill.span-start,
+.event-pill.span-middle,
+.event-pill.span-end,
+.event-pill.span-only {
+  border-radius: 0;
+  padding: 4px 6px;
+  font-size: .74rem;
 }
-/* Soften edges when event continues past a week boundary */
-.event-pill.spanning.continues-left  { border-top-left-radius: 0; border-bottom-left-radius: 0; padding-left: 6px; }
-.event-pill.spanning.continues-right { border-top-right-radius: 0; border-bottom-right-radius: 0; padding-right: 6px; }
 
-/* Color variants */
-.event-pill.blue  { background: var(--blue-light); color: var(--blue-dark);  border-left: 3px solid var(--blue-primary); }
-.event-pill.teal  { background: #E0F4F4; color: #1A6B6B; border-left: 3px solid #2AA8A8; }
-.event-pill.navy  { background: #E0E8F4; color: #1A2E5A; border-left: 3px solid #2C4B9A; }
-.event-pill.slate { background: #EEF1F7; color: #3A4A6A; border-left: 3px solid #5A7098; }
+/* Start piece: rounded left, extends past right cell edge */
+.event-pill.span-start {
+  border-radius: 5px 0 0 5px;
+  margin-right: -2px;
+  position: relative; z-index: 1;
+}
+/* Middle piece: no rounding, bridges both gaps */
+.event-pill.span-middle {
+  margin-left: -2px; margin-right: -2px;
+  position: relative; z-index: 1;
+  padding-left: 4px;
+}
+/* End piece: rounded right, bridges left gap */
+.event-pill.span-end {
+  border-radius: 0 5px 5px 0;
+  margin-left: -2px;
+  position: relative; z-index: 1;
+  padding-left: 4px;
+}
+/* Single-cell span (start === end within week): normal rounded */
+.event-pill.span-only {
+  border-radius: 5px;
+  padding: 4px 7px;
+}
 
 /* ── Tooltip ──────────────────────────────────────────────────── */
 .tooltip {
-  position: fixed;
-  z-index: 600;
-  background: var(--blue-darker);
-  color: var(--white);
-  border-radius: var(--radius);
-  padding: 14px 16px;
-  min-width: 200px;
-  max-width: 280px;
+  position: fixed; z-index: 600;
+  background: var(--blue-darker); color: var(--white);
+  border-radius: var(--radius); padding: 14px 16px;
+  min-width: 200px; max-width: 280px;
   box-shadow: var(--shadow-lg);
   pointer-events: none;
-  opacity: 0;
-  transform: translateY(6px) scale(.97);
+  opacity: 0; transform: translateY(6px) scale(.97);
   transition: opacity .18s, transform .18s;
 }
 .tooltip.visible { opacity: 1; transform: translateY(0) scale(1); }
@@ -281,105 +350,12 @@ html, body {
 .tooltip-body  { font-size: .8125rem; color: rgba(255,255,255,.75); line-height: 1.5; margin-bottom: 6px; }
 .tooltip-time  { font-size: .75rem; color: rgba(255,255,255,.5); font-weight: 600; letter-spacing: .03em; }
 
-/* ── Password Gate (floats over calendar) ─────────────────────── */
-.gate-overlay {
-  position: fixed; inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 30, 65, 0.45);
-  z-index: 500;
-}
-
-.gate-card {
-  background: var(--white);
-  border-radius: 16px;
-  padding: 40px 40px 36px;
-  width: min(400px, 92vw);
-  box-shadow: var(--shadow-lg), 0 0 0 1px rgba(0,72,136,.08);
-  text-align: center;
-}
-
-.gate-logo {
-  display: flex; align-items: center; justify-content: center; gap: 10px;
-  margin-bottom: 24px;
-}
-.gate-logo .logo-mark { width: 30px; height: 30px; border-radius: 7px; }
-.gate-logo .logo-mark::after { inset: 5px; }
-.gate-logo .logo-text { font-size: 1.05rem; font-weight: 700; color: var(--blue-dark); }
-
-.gate-title {
-  font-size: 1.375rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin-bottom: 8px;
-  letter-spacing: -.02em;
-}
-
-.gate-subtitle {
-  font-size: .875rem;
-  color: var(--text-secondary);
-  margin-bottom: 24px;
-  line-height: 1.5;
-}
-
-.input-group {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 10px;
-}
-
-.password-input {
-  flex: 1;
-  height: 44px;
-  padding: 0 14px;
-  border: 1.5px solid var(--gray-200);
-  border-radius: var(--radius-sm);
-  font-size: .9375rem;
-  color: var(--text-primary);
-  background: var(--gray-50);
-  transition: border-color .15s, box-shadow .15s;
-  outline: none;
-}
-.password-input:focus {
-  border-color: var(--blue-primary);
-  box-shadow: 0 0 0 3px rgba(0,102,204,.15);
-  background: var(--white);
-}
-.password-input::placeholder { color: var(--text-muted); }
-
-.unlock-btn {
-  height: 44px;
-  padding: 0 18px;
-  background: var(--blue-primary);
-  color: var(--white);
-  border: none;
-  border-radius: var(--radius-sm);
-  font-size: .875rem;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex; align-items: center; gap: 6px;
-  transition: background .15s, transform .1s;
-  white-space: nowrap;
-}
-.unlock-btn:hover  { background: var(--blue-dark); }
-.unlock-btn:active { transform: scale(.97); }
-
-.error-msg {
-  font-size: .8125rem;
-  color: #C0392B;
-  min-height: 18px;
-  transition: opacity .2s;
-}
-.error-msg:empty { opacity: 0; }
-
 /* ── Responsive ───────────────────────────────────────────────── */
 @media (max-width: 640px) {
-  .calendar-container { padding: 0 12px 32px; margin-top: 20px; }
-  .day-cell { min-height: 60px; padding: 5px; }
+  .gate-section { padding: 28px 16px 24px; }
+  .calendar-container { padding: 0 12px 32px; margin-top: 16px; }
+  .day-cell { min-height: 64px; }
   .header-inner { padding: 0 16px; }
-  .header-brand { display: none; }
-  .header-actions { display: none; }
+  .header-brand, .header-actions { display: none; }
   .month-label { font-size: 1rem; }
-  .week-spans { padding: 2px 4px 5px; }
 }
