@@ -15,7 +15,6 @@
 
     <!-- Gate: sits in normal page flow, above the calendar -->
     <div id="gate" class="gate-section">
-      <h1 class="page-title">Is Eugene Free?</h1>
       <div class="gate-inner">
         <div class="gate-brand">
           <div class="logo-mark"></div>
@@ -49,7 +48,8 @@
     <header id="app-header" class="app-header" style="display:none">
       <div class="header-inner">
         <div class="header-brand">
-          <span class="header-title">Is Eugene Free?</span>
+          <div class="logo-mark small"></div>
+          <span class="logo-text">My Schedule</span>
         </div>
         <div class="header-nav">
           <button class="nav-btn" onclick="changeMonth(-1)">&#8249;</button>
@@ -74,6 +74,7 @@
 
     <!-- Calendar (always rendered; empty while locked) -->
     <main class="calendar-container">
+      <h1 class="calendar-title">Is Eugene Free?</h1>
       <div class="calendar-grid" id="calendar-grid"></div>
     </main>
 

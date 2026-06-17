@@ -58,29 +58,20 @@ html, body {
 .logo-mark.small { width: 22px; height: 22px; border-radius: 5px; }
 .logo-mark.small::after { inset: 4px; }
 
-/* ── Page title ───────────────────────────────────────────────── */
-.page-title {
+/* ── Calendar title ───────────────────────────────────────────── */
+.calendar-title {
   text-align: center;
-  font-size: clamp(1.8rem, 5vw, 2.8rem);
-  font-weight: 800;
-  color: var(--white);
-  letter-spacing: -.03em;
-  padding: 22px 0 14px;
-  text-shadow: 0 2px 12px rgba(0,0,0,.18);
-}
-
-.header-title {
-  font-size: 1.1rem;
+  font-size: clamp(1.7rem, 4vw, 2.5rem);
   font-weight: 800;
   color: var(--blue-dark);
-  letter-spacing: -.02em;
-  white-space: nowrap;
+  letter-spacing: -.03em;
+  margin-bottom: 20px;
 }
 
 /* ── Gate section (in page flow, above calendar) ──────────────── */
 .gate-section {
   background: linear-gradient(160deg, var(--blue-darker) 0%, var(--blue-dark) 60%, var(--blue-primary) 100%);
-  padding: 0 24px 14px;
+  padding: 12px 24px;
 }
 
 .gate-inner {
@@ -392,9 +383,9 @@ html, body {
 
 /* ── Responsive ───────────────────────────────────────────────── */
 @media (max-width: 640px) {
-  .page-title { padding: 16px 0 12px; }
+  .calendar-title { margin-bottom: 14px; }
   /* Gate stacks: brand row, then full-width controls */
-  .gate-section { padding: 0 16px 14px; }
+  .gate-section { padding: 12px 16px; }
   .gate-inner { flex-direction: column; align-items: stretch; gap: 10px; }
   .gate-brand { justify-content: center; }
   .gate-controls { max-width: none; min-width: 0; }
@@ -405,7 +396,6 @@ html, body {
   .day-cell { min-height: 64px; }
   .header-inner { padding: 0 16px; }
   .header-actions { display: none; }
-  .header-title { font-size: .95rem; }
   .month-label { font-size: 1rem; min-width: 130px; }
   .locked-month-bar { padding: 10px 16px; }
 }

@@ -285,13 +285,13 @@ document.head.appendChild(_s);
   window.addEventListener('resize', resize);
   resize();
 
-  const COUNT = Math.min(55, Math.round(W * H / 16000));
+  const COUNT = Math.min(90, Math.round(W * H / 10000));
   const pts = Array.from({ length: COUNT }, () => ({
     x:  Math.random() * W,
     y:  Math.random() * H,
     r:  1.2 + Math.random() * 1.6,
-    vx: (Math.random() - 0.5) * 0.32,
-    vy: (Math.random() - 0.5) * 0.32,
+    vx: (Math.random() - 0.5) * 0.48,
+    vy: (Math.random() - 0.5) * 0.48,
     a:  0.05 + Math.random() * 0.10
   }));
 
