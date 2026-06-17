@@ -194,9 +194,9 @@ function renderCalendar() {
         else                                    spanClass = 'span-middle';
 
         const pill = makePill(ev, spanClass);
-        // Middle/end: show title only on the start piece to avoid repetition
+        // Middle/end: keep a non-breaking space so the pill doesn't collapse
         if (spanClass === 'span-middle' || spanClass === 'span-end') {
-          pill.textContent = '';
+          pill.textContent = ' ';
           pill.setAttribute('aria-hidden', 'true');
         }
         cellEl.appendChild(pill);
