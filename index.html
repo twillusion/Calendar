@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Schedule — Internal</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Password Gate -->
+  <div id="gate" class="gate-overlay">
+    <div class="gate-card">
+      <div class="gate-logo">
+        <div class="logo-mark"></div>
+        <span class="logo-text">Calendar</span>
+      </div>
+      <h2 class="gate-title">Access Required</h2>
+      <p class="gate-subtitle">This schedule is restricted. Enter the access code to continue.</p>
+      <div class="input-group">
+        <input
+          type="password"
+          id="password-input"
+          class="password-input"
+          placeholder="Enter access code"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <button id="unlock-btn" class="unlock-btn" onclick="attemptUnlock()">
+          <span>Unlock</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      <p id="error-msg" class="error-msg" aria-live="polite"></p>
+    </div>
+  </div>
+
+  <!-- Calendar App (hidden until unlocked) -->
+  <div id="app" class="app" hidden>
+    <header class="app-header">
+      <div class="header-inner">
+        <div class="header-brand">
+          <div class="logo-mark small"></div>
+          <span class="logo-text">My Schedule</span>
+        </div>
+        <div class="header-nav">
+          <button class="nav-btn" id="prev-month" onclick="changeMonth(-1)">&#8249;</button>
+          <h1 id="month-label" class="month-label">June 2026</h1>
+          <button class="nav-btn" id="next-month" onclick="changeMonth(1)">&#8250;</button>
+        </div>
+        <div class="header-actions">
+          <button class="lock-btn" onclick="lockCalendar()" title="Lock">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Lock
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="calendar-container">
+      <div class="calendar-grid" id="calendar-grid">
+        <!-- Weekday headers -->
+        <div class="weekday-header">Sun</div>
+        <div class="weekday-header">Mon</div>
+        <div class="weekday-header">Tue</div>
+        <div class="weekday-header">Wed</div>
+        <div class="weekday-header">Thu</div>
+        <div class="weekday-header">Fri</div>
+        <div class="weekday-header">Sat</div>
+        <!-- Days injected by JS -->
+      </div>
+    </main>
+
+    <!-- Tooltip -->
+    <div id="tooltip" class="tooltip" role="tooltip" aria-hidden="true">
+      <div class="tooltip-title" id="tooltip-title"></div>
+      <div class="tooltip-body" id="tooltip-body"></div>
+      <div class="tooltip-time" id="tooltip-time"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
