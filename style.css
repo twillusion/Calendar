@@ -279,6 +279,7 @@ html, body {
 .day-cell {
   background: var(--white);
   min-height: 100px;
+  min-width: 0; /* prevent cell expanding to fit nowrap text */
   padding: 8px 0 6px;
   display: flex; flex-direction: column; gap: 3px;
   overflow: visible;
