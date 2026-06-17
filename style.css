@@ -46,27 +46,26 @@ html, body {
 /* ── Gate section (in page flow, above calendar) ──────────────── */
 .gate-section {
   background: linear-gradient(160deg, var(--blue-darker) 0%, var(--blue-dark) 60%, var(--blue-primary) 100%);
-  padding: 18px 24px 16px;
+  padding: 12px 24px;
 }
 
 .gate-inner {
-  max-width: 560px;
+  max-width: 980px;
   margin: 0 auto;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 8px;
-  text-align: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px 20px;
 }
 
 .gate-brand {
   display: flex; align-items: center; gap: 10px;
-  margin-bottom: 4px;
 }
-.gate-brand .logo-mark { width: 28px; height: 28px; border-radius: 6px; }
+.gate-brand .logo-mark { width: 26px; height: 26px; border-radius: 6px; }
 .gate-brand .logo-mark::after { inset: 5px; }
 .gate-brand-name {
-  font-size: 1.1rem; font-weight: 700;
+  font-size: 1.05rem; font-weight: 700;
   color: var(--white); letter-spacing: -.01em;
 }
 .gate-badge {
@@ -75,22 +74,25 @@ html, body {
   color: rgba(255,255,255,.85);
   border-radius: 20px;
   padding: 3px 10px 3px 8px;
-  font-size: .75rem; font-weight: 600;
+  font-size: .72rem; font-weight: 600;
   letter-spacing: .02em;
 }
 
-.gate-subtitle {
-  font-size: .9rem;
-  color: rgba(255,255,255,.70);
+/* controls block holds the input row + (absolutely positioned) error */
+.gate-controls {
+  position: relative;
+  flex: 1;
+  min-width: 240px;
+  max-width: 420px;
 }
 
 .input-group {
   display: flex; gap: 8px;
-  width: 100%; max-width: 380px;
+  width: 100%;
 }
 
 .password-input {
-  flex: 1; height: 42px;
+  flex: 1; height: 40px;
   padding: 0 14px;
   border: 1.5px solid rgba(255,255,255,.25);
   border-radius: var(--radius-sm);
@@ -107,7 +109,7 @@ html, body {
 .password-input::placeholder { color: rgba(255,255,255,.45); }
 
 .unlock-btn {
-  height: 42px; padding: 0 18px;
+  height: 40px; padding: 0 18px;
   background: var(--white);
   color: var(--blue-dark);
   border: none; border-radius: var(--radius-sm);
@@ -120,12 +122,16 @@ html, body {
 .unlock-btn:hover  { background: var(--blue-light); }
 .unlock-btn:active { transform: scale(.97); }
 
+/* Error floats just below the input so it never grows the bar height */
 .error-msg {
-  font-size: .8125rem;
-  color: #FFB3B3;
-  min-height: 16px;
+  position: absolute;
+  top: calc(100% + 3px);
+  left: 2px;
+  font-size: .78rem;
+  color: #FFD2D2;
+  margin: 0;
 }
-.error-msg:empty { opacity: 0; }
+.error-msg:empty { display: none; }
 
 /* ── App header (visible only when unlocked) ──────────────────── */
 .app-header {
@@ -352,10 +358,19 @@ html, body {
 
 /* ── Responsive ───────────────────────────────────────────────── */
 @media (max-width: 640px) {
-  .gate-section { padding: 28px 16px 24px; }
+  /* Gate stacks: brand row, then full-width controls */
+  .gate-section { padding: 12px 16px; }
+  .gate-inner { flex-direction: column; align-items: stretch; gap: 10px; }
+  .gate-brand { justify-content: center; }
+  .gate-controls { max-width: none; min-width: 0; }
+  /* Keep room for the error so it doesn't overlap the calendar */
+  .gate-controls:has(.error-msg:not(:empty)) { padding-bottom: 18px; }
+  .error-msg { text-align: center; left: 0; right: 0; }
+
   .calendar-container { padding: 0 12px 32px; margin-top: 16px; }
   .day-cell { min-height: 64px; }
   .header-inner { padding: 0 16px; }
   .header-brand, .header-actions { display: none; }
   .month-label { font-size: 1rem; }
+  .locked-month-bar { padding: 10px 16px; }
 }

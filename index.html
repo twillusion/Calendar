@@ -19,22 +19,23 @@
           Restricted
         </span>
       </div>
-      <p class="gate-subtitle">Enter the access code to view events.</p>
-      <div class="input-group">
-        <input
-          type="password"
-          id="password-input"
-          class="password-input"
-          placeholder="Access code"
-          autocomplete="off"
-          spellcheck="false"
-        />
-        <button class="unlock-btn" onclick="attemptUnlock()">
-          Unlock
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
+      <div class="gate-controls">
+        <div class="input-group">
+          <input
+            type="password"
+            id="password-input"
+            class="password-input"
+            placeholder="Access code"
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <button class="unlock-btn" onclick="attemptUnlock()">
+            Unlock
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+        <p id="error-msg" class="error-msg" aria-live="polite"></p>
       </div>
-      <p id="error-msg" class="error-msg" aria-live="polite"></p>
     </div>
   </div>
 
