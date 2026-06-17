@@ -272,6 +272,70 @@ _s.textContent = `
 .shake{animation:shake .35s ease;}`;
 document.head.appendChild(_s);
 
+/* ── Ambient particles ───────────────────────────────────────── */
+(function () {
+  const canvas = document.getElementById('bg-canvas');
+  const ctx    = canvas.getContext('2d');
+  let W, H;
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  const COUNT = Math.min(55, Math.round(W * H / 16000));
+  const pts = Array.from({ length: COUNT }, () => ({
+    x:  Math.random() * W,
+    y:  Math.random() * H,
+    r:  1.2 + Math.random() * 1.6,
+    vx: (Math.random() - 0.5) * 0.32,
+    vy: (Math.random() - 0.5) * 0.32,
+    a:  0.05 + Math.random() * 0.10
+  }));
+
+  const LINK_DIST = 130;
+
+  function frame() {
+    ctx.clearRect(0, 0, W, H);
+
+    // Update positions
+    pts.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0) p.x += W; else if (p.x > W) p.x -= W;
+      if (p.y < 0) p.y += H; else if (p.y > H) p.y -= H;
+    });
+
+    // Draw links between nearby particles
+    for (let i = 0; i < pts.length; i++) {
+      for (let j = i + 1; j < pts.length; j++) {
+        const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y;
+        const d  = Math.sqrt(dx * dx + dy * dy);
+        if (d < LINK_DIST) {
+          ctx.beginPath();
+          ctx.moveTo(pts[i].x, pts[i].y);
+          ctx.lineTo(pts[j].x, pts[j].y);
+          ctx.strokeStyle = `rgba(0,102,204,${0.07 * (1 - d / LINK_DIST)})`;
+          ctx.lineWidth = 0.6;
+          ctx.stroke();
+        }
+      }
+    }
+
+    // Draw dots
+    pts.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(0,102,204,${p.a})`;
+      ctx.fill();
+    });
+
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
 /* ── Boot ────────────────────────────────────────────────────── */
 renderCalendar();
 document.getElementById('password-input').focus();
