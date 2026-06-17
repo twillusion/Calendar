@@ -41,7 +41,9 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(145deg, var(--blue-darker) 0%, var(--blue-dark) 50%, var(--blue-primary) 100%);
+  background: rgba(0, 48, 104, 0.40);
+  backdrop-filter: blur(7px) saturate(115%);
+  -webkit-backdrop-filter: blur(7px) saturate(115%);
   z-index: 1000;
 }
 

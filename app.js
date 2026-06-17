@@ -25,7 +25,8 @@
     }
   };
   const _onDevOpen = () => {
-    if (document.getElementById('app') && !document.getElementById('app').hidden) {
+    const gate = document.getElementById('gate');
+    if (gate && gate.style.display === 'none') { // only if currently unlocked
       lockCalendar();
     }
   };
@@ -39,7 +40,7 @@
    "
    Paste the output as ENCRYPTED_BLOB below.
    ──────────────────────────────────────────────────────────────── */
-const ENCRYPTED_BLOB = "PE1TXHIET1laQVhaTH00Gk40WxYFCU5TTS8rDA4NOBBOSxgFBApMfU0gACwSBggVTkVNDSgDDh5iCEALABkMTUJlCwQYIVsOS1ZOKhodMwAMTAFeAQYNFEkbCyofDQ00V0IPAx5JJyxlEjxAYgBSW1pBWVlDdllDVhtJQB0FGAUKTH1NIAAjXQMRTkBLGwcqCkNWYnMOBUwICBZMa00CAyxdEEtWTgsDGyJNTU4kVxYIBQBLVUwEGhIYL19CKAAPBg4WZxsEATBeAx0JTA8AHGcnI049b05LXlxbWUN3WUxddxBYMhdOHQYaKwpDVmJzDgoDDRFNQmUbCAElEFhLLQAFTwomFkNAYlENBQMeS1VMJQMUCWIeQA0JGAgGAmVVQy81QRYGAUwoAw0oDhlMNFcPGQANHQpOIQATTAhwQBQxQEtdXnVZTFx2H1NRTlYyFEwzBhUAJRBYSy0ACgAPP01NTjRbDwxOVksuAitPBQ05EE5LDwMFABxlVUMOLEcHS0BODQoaJgYNTnoQIRwfGAYCTgYDAgMhSkIdCQEZAw8zCkEKL0BCIS5OFDJCZV1RXnYfUl9BXVBNVBwUQxgpRg4MTlZLLgIkAAAUYh5AHQUBDE1UZS4NAGBWAxBOQEsMASsAE156EAAFGQlLQ0wjChUNKV5AU04vHBwaKAJBLSxRDQgUTB0KAzcDABglEgQGHkwhLUw6Mhw=";
+const ENCRYPTED_BLOB = "PE1TXHIET1laQVhaTH00Gk40WxYFCU5TTS8rDA4NOBBOSxgFBApMfU0gACwSBggVTkVNDSgDDh5iCEALABkMTUJlCwQYIVsOS1ZOKhodMwAMTAFeAQYNFEkbCyofDQ00V0IPAx5JJyxlEjxAYgBSW1pBWVlDdllDVhtJQB0FGAUKTH1NIAAjXQMRTkBLGwcqCkNWYnMOBUwICBZMa00CAyxdEEtWTgsDGyJNTU4kVxYIBQBLVUwEGhIYL19CKAAPBg4WZxsEATBeAx0JTA8AHGcnI049b05LXlxbWUN3WUxddxBYMhdOHQYaKwpDVmJzDgoDDRFNQmUbCAElEFhLLQAFTwomFkNAYlENBQMeS1VMJQMUCWIeQA0JGAgGAmVVQy81QRYGAUwoAw0oDhlMNFcPGQANHQpOIQATTAhwQBQxQEtdXnVZTFx2H1NRTlYyFEwzBhUAJRBYSy0ACgAPP01NTjRbDwxOVksuAitPBQ05EE5LDwMFABxlVUMOLEcHS0BODQoaJgYNTnoQIRwfGAYCTgYDAgMhSkIdCQEZAw8zCkEKL0BCIS5OFDJCZV1RXnYfUl9BXVBNVBwUQxgpRg4MTlZLLgIkAAAUYh5AHQUBDE1UZS4NAGBWAxBOQEsMASsAE056EAAFGQlLQ0wjChUNKV5AU04vHBwaKAJBLSxRDQgUTB0KAzcDABglEgQGHkwhLUw6Mhw=";
 
 /* ── Crypto helpers (XOR cipher + base64) ────────────────────── */
 function xorCipher(str, key) {
@@ -91,13 +92,12 @@ function attemptUnlock() {
 
   calendarEvents = parsed;
   document.getElementById('gate').style.display = 'none';
-  document.getElementById('app').hidden = false;
   renderCalendar();
 }
 
 function lockCalendar() {
   calendarEvents = {};
-  document.getElementById('app').hidden = true;
+  renderCalendar();
   document.getElementById('gate').style.display = '';
   const input = document.getElementById('password-input');
   input.value = '';
@@ -243,3 +243,10 @@ style.textContent = `
 .shake{animation:shake .35s ease;}
 `;
 document.head.appendChild(style);
+
+/* ── Initial render ──────────────────────────────────────────────
+   Render an empty calendar on load so visitors immediately see
+   it's a calendar. Real events only appear after the password
+   decrypts the blob. ──────────────────────────────────────────── */
+renderCalendar();
+document.getElementById('password-input').focus();
