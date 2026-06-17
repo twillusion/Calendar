@@ -249,14 +249,12 @@ html, body {
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow-md);
-  background: var(--gray-200); /* cell separators */
+  background: var(--white);
 }
 
 .cal-header {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 0 1px;
-  background: var(--blue-dark);
 }
 
 .weekday-header {
@@ -266,14 +264,14 @@ html, body {
   padding: 11px 0;
   font-size: .72rem; font-weight: 700;
   letter-spacing: .08em; text-transform: uppercase;
+  border-right: 1px solid rgba(255,255,255,.12);
 }
+.weekday-header:last-child { border-right: none; }
 
 /* ── Week rows ────────────────────────────────────────────────── */
 .week-row {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 0 1px;
-  background: var(--gray-200);
   border-bottom: 1px solid var(--gray-200);
 }
 .week-row:last-child { border-bottom: none; }
@@ -281,10 +279,12 @@ html, body {
 .day-cell {
   background: var(--white);
   min-height: 100px;
-  padding: 8px 0 6px; /* no horizontal padding — let events go edge-to-edge */
+  padding: 8px 0 6px;
   display: flex; flex-direction: column; gap: 3px;
   overflow: visible;
+  border-right: 1px solid var(--gray-200);
 }
+.day-cell:last-child { border-right: none; }
 .day-cell:hover { background: var(--gray-50); }
 .day-cell.other-month { background: var(--gray-50); }
 .day-cell.other-month .day-number { color: var(--text-muted); }
@@ -340,22 +340,22 @@ html, body {
   font-size: .74rem;
 }
 
-/* Start piece: rounded left, extends past right cell edge */
+/* Start piece: rounded left, overlaps the cell's right border */
 .event-pill.span-start {
   border-radius: 5px 0 0 5px;
-  margin-right: -2px;
+  margin-right: -1px;
   position: relative; z-index: 1;
 }
-/* Middle piece: no rounding, bridges both gaps */
+/* Middle piece: overlaps both adjacent borders */
 .event-pill.span-middle {
-  margin-left: -2px; margin-right: -2px;
+  margin-left: -1px; margin-right: -1px;
   position: relative; z-index: 1;
   padding-left: 4px;
 }
-/* End piece: rounded right, bridges left gap */
+/* End piece: overlaps the left cell's border */
 .event-pill.span-end {
   border-radius: 0 5px 5px 0;
-  margin-left: -2px;
+  margin-left: -1px;
   position: relative; z-index: 1;
   padding-left: 4px;
 }
